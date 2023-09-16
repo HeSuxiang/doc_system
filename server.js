@@ -6,7 +6,7 @@ const app = express()
 const ApiRouter = require("./route/ApiRouter")
 const HomeRouter = require("./route/HomeRouter")
 const LoginRouter = require("./route/LoginRouter")
-
+const cors = require('cors');
 
 //Express 有一个官方支持的模块 body-parser，它包括一个 解析器，用于 URL 编码的请求体，比如 HTML 表单提交的请求体。
 app.use(express.urlencoded({ extended: false }))
@@ -16,6 +16,10 @@ app.use(express.urlencoded({ extended: false }))
 // 解析此应用程序的 JSON 正文。确保在路由处理程序之前放置 app.use(express.json())！
 app.use(express.json())
 
+//CORS跨域配置和静态访问服务
+app.use(cors({
+  origin: '*'
+}));
 
 // 托管静态资源
 app.use(express.static('./dist'))

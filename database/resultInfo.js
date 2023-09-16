@@ -5,9 +5,9 @@ var resultInfo = function (code, data, msg) {
 	msg = msg || "";
 	//这边采用的是首字母大写，具体返回哪种格式可以自定义
 	var obj = {
-		Code: code,
-		Data: data,
-		Message: msg,
+		code: code,
+		data: data,
+		message: msg,
 	};
 	return obj;
 };
