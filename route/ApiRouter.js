@@ -8,14 +8,16 @@ const express = require("express");
 const router = express.Router()
 
 const db = require("../database/db")
-const dbHelp = require("../database/dbUserHelp")
+const dbUserHelp = require("../database/dbUserHelp")
+const dbGroupHelp = require("../database/dbGroupHelp")
+
 //resultInfo.js
 var resultInfo = require("../database/resultInfo");
 
 //路由级别-响应前端的get请求
 //获取所有用户
 router.get("/user/all", (req, res) => {
-    dbHelp.getAllUser(req, res);
+    dbUserHelp.getAllUser(req, res);
 
 })
 
@@ -40,21 +42,36 @@ router.get("/user/all", (req, res) => {
 router.post("/user/query", (req, res) => {
 
     // console.log(req)//必须配置中间件
-    dbHelp.queryUser(req, res);
+    dbUserHelp.queryUser(req, res);
 
 
 })
 
 
 ////路由级别-响应前端的post请求
-//验证用户名-密码
+//增加用户
 router.post("/user/add", async (req, res) => {
     // console.log("add body", req.body)//必须配置中间件
     // console.log(req)//必须配置中间件
-    dbHelp.addUser(req, res);
+    dbUserHelp.addUser(req, res);
 
 })
 
+
+
+//获取所有用户组
+router.get("/groups/all", (req, res) => {
+    dbGroupHelp.getAllGroup(req, res);
+
+})
+
+//增加用户组
+router.post("/groups/add", async (req, res) => {
+    console.log("add body", req.body)//必须配置中间件
+    // console.log(req)//必须配置中间件
+    dbGroupHelp.addGroup(req, res);
+
+})
 ////路由级别-响应前端的put ,delete请求
 
 

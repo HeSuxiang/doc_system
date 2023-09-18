@@ -10,7 +10,7 @@ const dbUserHelp = {
 	getAllUser: (req, res) => {
 		// new URL
 		console.log("getAllUser query", req.query)
-		db.any('select id, name, password,showname,isdisable,isadmin  from users where 1 = $1', [1])
+		db.any('select id, name, password,showname,isdisable,isadmin  from users where 1 = $1 ORDER BY id ASC', [1])
 			.then(data => {
 				// console.log('DATA:', resultInfo(true, data, "success")); // print data;
 				res.send(resultInfo(true, data, "success"))
