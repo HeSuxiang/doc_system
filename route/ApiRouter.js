@@ -12,7 +12,7 @@ const dbUserHelp = require("../database/dbUserHelp")
 const dbGroupHelp = require("../database/dbGroupHelp")
 
 //resultInfo.js
-var resultInfo = require("../database/resultInfo");
+const { resultInfo } = require("../database/resultInfo");
 
 //路由级别-响应前端的get请求
 //获取所有用户

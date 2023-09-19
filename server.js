@@ -4,6 +4,7 @@ const express = require('express')
 const app = express()
 
 const ApiRouter = require("./route/ApiRouter")
+const UploadRouter = require("./route/UploadRouter")
 const HomeRouter = require("./route/HomeRouter")
 const LoginRouter = require("./route/LoginRouter")
 const cors = require('cors');
@@ -32,6 +33,8 @@ app.use("/static", express.static("static"))
 
 //应用级别
 app.use("/api", ApiRouter)
+app.use("/upload", UploadRouter)
+
 app.use("/home", HomeRouter)
 app.use("/login", LoginRouter)
 

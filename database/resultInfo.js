@@ -12,4 +12,29 @@ var resultInfo = function (code, data, msg) {
 	return obj;
 };
 
-module.exports = resultInfo;
+var fileInfo = function (filename, originalname, dirindex, upuser, uptime, size, path, mimetype, md5) {
+	filename = filename || "";
+	originalname = originalname || "";
+	dirindex = dirindex || "";
+	upuser = upuser || "";
+	uptime = uptime || 0;
+	size = size || 0;
+	path = path || "";
+	mimetype = mimetype || "";
+	md5 = md5 || "";
+
+	var obj = {
+		filename: filename,
+		originalname: originalname,
+		dirindex: dirindex,
+		upuser: upuser,
+		uptime: uptime,
+		size: size,
+		path: path,
+		mimetype: mimetype,
+		md5: md5,
+	};
+	return obj;
+};
+
+module.exports = { resultInfo, fileInfo };
