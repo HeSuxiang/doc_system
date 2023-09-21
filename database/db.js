@@ -31,5 +31,5 @@ const cn = {
 
 const db = pgp(cn); // database instance;
 
-module.exports = db
+module.exports = { pgp, db }
 

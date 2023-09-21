@@ -1,5 +1,5 @@
 
-const db = require("./db")
+const { db } = require("./db")
 //resultInfo.js
 const { resultInfo } = require("../database/resultInfo");
 
@@ -51,7 +51,7 @@ const dbUserHelp = {
 		console.log("add", username, password, showname)//必须配置中间件
 
 
-		db.tx(async t => {
+		db.task(async t => {
 			// `t` and `this` here are the same;
 			// this.ctx = transaction config + state context;
 			var newUserId = 0;

@@ -37,4 +37,13 @@ var fileInfo = function (filename, originalname, dirindex, upuser, uptime, size,
 	return obj;
 };
 
-module.exports = { resultInfo, fileInfo };
+function getdate() {
+	var now = new Date(),
+		y = now.getFullYear(),
+		m = now.getMonth() + 1,
+		d = now.getDate();
+	return y + "-" + (m < 10 ? "0" + m : m) + "-" + (d < 10 ? "0" + d : d) + " " + now.toTimeString().substr(0, 8);
+}
+
+
+module.exports = { resultInfo, fileInfo, getdate }; 

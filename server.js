@@ -5,6 +5,7 @@ const app = express()
 
 const ApiRouter = require("./route/ApiRouter")
 const UploadRouter = require("./route/UploadRouter")
+const FilesRouter = require("./route/FilesRouter")
 const HomeRouter = require("./route/HomeRouter")
 const LoginRouter = require("./route/LoginRouter")
 const cors = require('cors');
@@ -16,6 +17,9 @@ app.use(express.urlencoded({ extended: false }))
 //json() 中间件将一个 body 属性添加到 Express req 中。您可以使用 req.body
 // 解析此应用程序的 JSON 正文。确保在路由处理程序之前放置 app.use(express.json())！
 app.use(express.json())
+
+
+app.use(express.urlencoded({ extended: false }));
 
 //CORS跨域配置和静态访问服务
 app.use(cors({
@@ -34,7 +38,7 @@ app.use("/static", express.static("static"))
 //应用级别
 app.use("/api", ApiRouter)
 app.use("/upload", UploadRouter)
-
+app.use("/files", FilesRouter)
 app.use("/home", HomeRouter)
 app.use("/login", LoginRouter)
 

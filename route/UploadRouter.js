@@ -6,9 +6,9 @@ var multer = require('multer')
 const fs = require("fs")
 
 const db = require("../database/db")
-const dbFileHelp = require("../database/dbFileHelp")
+const dbUploadHelp = require("../database/dbUploadHelp")
 //resultInfo.js
-const { resultInfo, fileInfo } = require("../database/resultInfo");
+const { resultInfo, fileInfo, getdate } = require("../database/resultInfo");
 
 const path = require("path")
 
@@ -57,12 +57,7 @@ var upload = multer({ storage: storage })
 router.post('/file', upload.single('file'), function (req, res, next) {
 	// req.files is array of `photos` files
 	// req.body will contain the text fields, if there were any
-	console.log("file", req.file);
-	console.log("post body.md5", req.body.md5);
 	const { md5, dirindex, upuser } = req.body
-
-
-	console.log(md5, dirindex, upuser);
 	//重新用MD5命名文件
 	const file = req.file;
 	const fileFormat = (file.originalname).split('.').at(-1); // 取后缀
@@ -73,40 +68,24 @@ router.post('/file', upload.single('file'), function (req, res, next) {
 	fs.renameSync(filepath, newfilepath);
 
 	//设置文件信息
-	var fileinfo = fileInfo(newFileName, file.originalname, parseInt(dirindex), upuser, Date.now(), file.size, file.path, file.mimetype, md5)
+	var fileinfo = fileInfo(newFileName, file.originalname, parseInt(dirindex), upuser, getdate(), file.size, file.path, file.mimetype, md5)
 	//插入信息到数据库
-	dbFileHelp.AddFile(req, res, fileinfo);
-
-
+	dbUploadHelp.AddFile(req, res, fileinfo);
 })
 
 //多文件上传
 // router.post('/files', upload.any('file', 999), function (req, res, next) {
-
 router.post('/files', upload.array('files', 999), function (req, res, next) {
-	// req.files is array of `photos` files
-	// req.body will contain the text fields, if there were any
 	console.log(req.files);
-
-	// req.body.files.forEach(file => {
-	// 	console.log("upload originalname", file.originalname);
-	// 	console.log("upload mimetype", file.mimetype);
-	// 	console.log("upload size", file.size);
-	// 	console.log("upload destination", file.destination);
-	// 	console.log("upload filename", file.filename);
-	// 	console.log("upload path", file.path);
-	// });
 	res.send(resultInfo(true, "files", "success"));
 
 })
 
-router.post("/query", (req, res) => {
-	// const { fileMd5, fileName } = req.body;
-	// console.log("queryFile fileMd5", fileMd5);
-	// console.log("queryFile fileName", fileName);
-	dbFileHelp.queryOrAddFile(req, res);
-	// res.send(resultInfo(true, "queryFile", "success"))
+
+router.post("/queryaddfile", (req, res) => {
+	dbUploadHelp.queryAddFile(req, res);
 })
+
 
 
 

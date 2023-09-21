@@ -1,5 +1,5 @@
 
-const db = require("./db")
+const { db } = require("./db")
 //resultInfo.js
 const { resultInfo } = require("../database/resultInfo");
 
