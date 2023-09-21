@@ -9,7 +9,7 @@ const router = express.Router()
 const db = require("../database/db")
 const dbFilesHelp = require("../database/dbFilesHelp")
 //resultInfo.js
-const { resultInfo, fileInfo, getdate } = require("../database/resultInfo");
+const { resultInfo, fileInfo, getdate } = require("../database/utils");
 
 router.get("/getfiles/:index", (req, res) => {
 	dbFilesHelp.getfiles(req, res);

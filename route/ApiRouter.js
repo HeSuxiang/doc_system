@@ -12,7 +12,7 @@ const dbUserHelp = require("../database/dbUserHelp")
 const dbGroupHelp = require("../database/dbGroupHelp")
 
 //resultInfo.js
-const { resultInfo } = require("../database/resultInfo");
+const { resultInfo } = require("../database/utils");
 
 //路由级别-响应前端的get请求
 //获取所有用户
@@ -50,7 +50,7 @@ router.post("/user/query", (req, res) => {
 
 ////路由级别-响应前端的post请求
 //增加用户
-router.post("/user/add", async (req, res) => {
+router.post("/user/add", (req, res) => {
     // console.log("add body", req.body)//必须配置中间件
     // console.log(req)//必须配置中间件
     dbUserHelp.addUser(req, res);

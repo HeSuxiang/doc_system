@@ -8,7 +8,7 @@ const fs = require("fs")
 const db = require("../database/db")
 const dbUploadHelp = require("../database/dbUploadHelp")
 //resultInfo.js
-const { resultInfo, fileInfo, getdate } = require("../database/resultInfo");
+const { resultInfo, fileInfo, getdate } = require("../database/utils");
 
 const path = require("path")
 

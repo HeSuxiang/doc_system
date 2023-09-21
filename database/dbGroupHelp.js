@@ -1,7 +1,7 @@
 
 const { db } = require("./db")
 //resultInfo.js
-const { resultInfo } = require("../database/resultInfo");
+const { resultInfo } = require("../database/utils");
 
 //路由级别-响应前端的get请求
 //获取所有用户组

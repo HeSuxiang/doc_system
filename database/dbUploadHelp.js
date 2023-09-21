@@ -1,7 +1,7 @@
 
 const { pgp, db } = require("./db")
 //resultInfo.js
-const { resultInfo, fileInfo, getdate } = require("./resultInfo");
+const { resultInfo, fileInfo, getdate } = require("./utils");
 
 
 const dbUploadHelp = {
