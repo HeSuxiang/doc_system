@@ -20,13 +20,14 @@ const dbUploadHelp = {
 
 			var newfileinfo;
 
-			console.log("有MD5文件", fileinfo);
+			// console.log("有MD5文件", fileinfo);
 			//有记录，
 			if (fileinfo) {
 				//查询当前目录是否有有同名文件
 				var hasSomeNameFile;
+				fileinfo.originalname = originalname;
 				do {
-					hasSomeNameFile = await t.any('select id,originalname,dirindex from files where originalname = $1 and dirindex = $2 ORDER BY id ASC', [fileinfo.originalname, fileinfo.dirindex]);
+					hasSomeNameFile = await t.any('select id,originalname,dirindex from files where originalname = $1 and dirindex = $2 ORDER BY id ASC', [fileinfo.originalname, dirindex]);
 					//有同名文件
 					if (hasSomeNameFile && hasSomeNameFile.length > 0) {
 						//修改新文件名 加(1)
@@ -39,7 +40,7 @@ const dbUploadHelp = {
 
 				//插入新文件名数据
 				newfileinfo = await t.oneOrNone('INSERT INTO files( filename, originalname, dirindex, upuser, uptime, size, path, mimetype, md5)  VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING id',
-					[fileinfo.filename, fileinfo.originalname, fileinfo.dirindex, fileinfo.upuser, getdate(), fileinfo.size, fileinfo.path, fileinfo.mimetype, fileinfo.md5])
+					[fileinfo.filename, fileinfo.originalname, dirindex, upuser, uptime, fileinfo.size, fileinfo.path, fileinfo.mimetype, fileinfo.md5])
 			}
 			console.log("fileinfo", fileinfo);
 			console.log("newfileinfo", newfileinfo);

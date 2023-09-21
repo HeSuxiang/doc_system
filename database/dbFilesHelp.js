@@ -13,7 +13,7 @@ const dbFilesHelp = {
 		console.log("getfiles query index", index)
 		db.any('select * from files where dirindex = $1 ORDER BY id ASC', [index])
 			.then(data => {
-				console.log('DATA:', data); // print data;
+				// console.log('DATA:', data); // print data;
 				res.send(resultInfo(true, data, "success"))
 				// return (resultInfo(true, data, "success"))
 			})
