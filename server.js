@@ -6,7 +6,7 @@ const app = express()
 const ApiRouter = require("./route/ApiRouter")
 const UploadRouter = require("./route/UploadRouter")
 const FilesRouter = require("./route/FilesRouter")
-const DirectorsRouter = require("./route/DirectorsRouter")
+// const dbFilesAndDirectorysHelp = require("./route/dbFilesAndDirectorysHelp")
 const HomeRouter = require("./route/HomeRouter")
 const LoginRouter = require("./route/LoginRouter")
 const cors = require('cors');
@@ -41,7 +41,7 @@ app.use("/api", ApiRouter)
 app.use("/upload", UploadRouter)
 app.use("/files", FilesRouter)
 
-app.use("/dirs", DirectorsRouter)
+// app.use("/fils", dbFilesHelp)
 app.use("/home", HomeRouter)
 app.use("/login", LoginRouter)
 
