@@ -11,14 +11,16 @@ const dbUploadHelp = {
 		// new URL
 		console.log("queryFile query", req.body)
 		const { filemd5, originalname, dirindex, upuser, uptime } = req.body;
+		var fileinfo;
+		var newfileinfo;
 		db.task(async t => {
 			// t.ctx = task config + state context;
 			//查询同MD5文件
-			var fileinfo = await t.any('select id,filename,originalname,dirindex,upuser,uptime,size, path,mimetype, md5 from files where md5 = $1 ORDER BY id ASC', [filemd5]);
+			fileinfo = await t.any('select id,filename,originalname,dirindex,upuser,uptime,size, path,mimetype, md5 from files where md5 = $1 ORDER BY id ASC', [filemd5]);
+			// console.log("await fileinfo", fileinfo);
+			fileinfo = fileinfo.length > 0 ? fileinfo[0] : false
+			// console.log("  fileinfo.length > 0? fileinfo[0] : false", fileinfo);
 
-			fileinfo = fileinfo ? fileinfo[0] : false
-
-			var newfileinfo;
 
 			// console.log("有MD5文件", fileinfo);
 			//有记录，
@@ -49,18 +51,20 @@ const dbUploadHelp = {
 			.then(data => {
 				const { fileinfo, newfileinfo } = data;
 				// success;
-				if (fileInfo) {
+				if (fileinfo) {
 					//不用上传
+					console.log("不用上传", fileinfo, newfileinfo);
 					if (newfileinfo) {
 						res.send(resultInfo(true, newfileinfo, "success"))
 					} else {
 						res.send(resultInfo(true, newfileinfo, "fail"))
 					}
 
-				} else (
+				} else {
+					console.log("需要上传");
 					//需要上传
 					res.send(resultInfo(false, fileinfo, "upload"))
-				)
+				}
 
 			})
 			.catch(error => {
