@@ -5,7 +5,6 @@ const router = express.Router()
 var multer = require('multer')
 const fs = require("fs")
 
-const db = require("../database/db")
 const dbUploadHelp = require("../database/dbUploadHelp")
 //resultInfo.js
 const { resultInfo, fileInfo, getdate } = require("../database/utils");

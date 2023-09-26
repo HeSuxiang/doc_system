@@ -5,26 +5,17 @@
 const express = require("express")
 
 const router = express.Router()
-//路由级别-响应前端的get请求
-router.get("/",(req,res)=>{
-    // new URL
-    console.log(req.query)
-    res.send("login-success")
-})
+
 
 ////路由级别-响应前端的post请求
-router.post("/",(req,res)=>{
-    console.log(req.body)//必须配置中间件
-    const {username,password} = req.body
-    if(username==="kerwin" && password==="123456"){
-        res.send({ok:1})
-    }else{
-        res.send({ok:0})
-    }
-    
+//验证用户名-密码
+router.post("/user/query", (req, res) => {
+
+    // console.log(req)//必须配置中间件
+    dbUserHelp.queryUser(req, res);
+
+
 })
 
-////路由级别-响应前端的put ,delete请求
 
-
-module.exports=  router
+module.exports = router

@@ -5,11 +5,17 @@ const app = express()
 
 const ApiRouter = require("./route/ApiRouter")
 const UploadRouter = require("./route/UploadRouter")
+const DownLoadRouter = require("./route/DownLoadRouter")
 const FilesRouter = require("./route/FilesRouter")
-// const dbFilesAndDirectorysHelp = require("./route/dbFilesAndDirectorysHelp")
+
 const HomeRouter = require("./route/HomeRouter")
 const LoginRouter = require("./route/LoginRouter")
 const cors = require('cors');
+const { JWT } = require('./database/utils')
+
+//引入cookie-parser
+const cookieParser = require('cookie-parser');
+app.use(cookieParser("abc"));//cookie 的加密
 
 //Express 有一个官方支持的模块 body-parser，它包括一个 解析器，用于 URL 编码的请求体，比如 HTML 表单提交的请求体。
 app.use(express.urlencoded({ extended: false }))
@@ -30,20 +36,98 @@ app.use(cors({
 // 托管静态资源
 app.use(express.static('./dist'))
 
-
-
 //配置静态资源
 app.use(express.static("public"))
 app.use("/static", express.static("static"))
 
+
+
+
+// //设置中间件，cookie校验
+app.use((req, res, next) => {
+  console.log("cookie校验 req.url ", req.url)
+  res.header("Access-Control-Allow-Credentials", "true");
+  console.log("req.cookies.userinfo  ", req.cookies.userInfo)
+
+
+
+  //检查cookie
+  if (req.cookies.userInfo) {
+    //有cookie
+    const userinfo = JSON.parse(req.cookies.userInfo)
+    console.log("has cookie username", userinfo.username);
+    console.log("no cookie req.url 访问通过", req.url);
+    next()
+  } else {
+    //无cookie
+    // console.log("cookies userinfo", userinfo)
+    // if (req.url.includes("/api/user/query") || req.url.includes("/down/")) {
+    if (req.url.includes("/api/user/query")) {
+      console.log("no cookie req.url 访问通过", req.url);
+
+
+      next()
+    } else {
+      console.log("no cookie req.url 访问被拒绝", req.url);
+      res.send({ code: 401, errInfo: "cookie无效" })
+    }
+  }
+
+})
+
+// //设置中间件，token过期校验
+// app.use((req, res, next) => {
+//   //排除login相关的路由和接口
+//   console.log("token校验 req.url ", req.url)
+//   if (req.url.includes("/api/user/query") || req.url.includes("/down/")) {
+//     console.log("eq.url.includes(/api/user/query) ", req.url.includes("/api/user/query"))
+
+//     console.log("req.url.includes(/ down / )", req.url.includes("/down/"))
+//     next()
+//     return
+//   }
+
+//   const token = req.headers["token"]
+//   console.log("token校验", token)
+
+//   if (token) {
+//     const payload = JWT.verify(token)
+//     console.log("token校验 payload", payload)
+//     if (payload) {
+//       //重新计算token过期时间
+//       const newToken = JWT.generate({
+//         username: payload.username,
+//       }, "1d")
+//       res.setHeader("Access-Control-Expose-Headers", "token");
+//       res.header("token", newToken)
+//       next()
+//     } else {
+//       res.setHeader("Access-Control-Expose-Headers", "token");
+//       res.header("token", null)
+//       res.status(401).send({ code: 401, errInfo: "token无效" })
+//       // next() //调试暂时放行
+//     }
+//   } else {
+//     res.setHeader("Access-Control-Expose-Headers", "token");
+//     res.header("token", null)
+//     res.status(401).send({ code: 401, errInfo: "无token" })
+//     // next() //调试暂时放行
+//   }
+// })
+
+
+
 //应用级别
 app.use("/api", ApiRouter)
 app.use("/upload", UploadRouter)
+app.use("/login", LoginRouter)
+app.use("/down", DownLoadRouter)
+
 app.use("/files", FilesRouter)
 
 // app.use("/fils", dbFilesHelp)
 app.use("/home", HomeRouter)
-app.use("/login", LoginRouter)
+
 
 
 app.use((req, res) => {

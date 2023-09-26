@@ -47,7 +47,7 @@ const dbFilesHelp = {
 	getDirsOfParentIndex: (req, res) => {
 		const parentIndex = req.params.parentIndex
 		// new URL
-		console.log("getDirs query parentindex", parentIndex)
+		console.log("getDirsOfParentIndex ", parentIndex)
 		db.any('select * from directorys where parentindex = $1 ORDER BY id ASC', [parentIndex])
 			.then(data => {
 				// console.log('DATA:', data); // print data;
@@ -73,7 +73,7 @@ const dbFilesHelp = {
 		var typefile = "file";
 
 
-		console.log("getDirs query parentindex", parentIndex)
+		console.log("getFilesAndDirsOfParentIndex", parentIndex)
 
 		//pgadmin 语句
 		// 		SELECT * FROM(

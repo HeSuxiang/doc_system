@@ -45,5 +45,22 @@ function getdate() {
 	return y + "-" + (m < 10 ? "0" + m : m) + "-" + (d < 10 ? "0" + d : d) + " " + now.toTimeString().substr(0, 8);
 }
 
+//token 
+const jwt = require("jsonwebtoken")
+const secret = "doc-system"
+const JWT = {
+	generate(value, expires) {
+		return jwt.sign(value, secret, { expiresIn: expires })
+	},
+
+	verify(token) {
+		try {
+			return jwt.verify(token, secret)
+		} catch (error) {
+			return false
+		}
+	}
+}
+
 
 module.exports = { resultInfo, fileInfo, getdate }; 
