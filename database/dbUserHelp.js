@@ -40,7 +40,7 @@ const dbUserHelp = {
 					// 	username: username,
 					// }, "1d")
 
-					var userInfo = {
+					var userinfo = {
 						// token: token,
 						username: data[0].name,
 						showname: data[0].showname,
@@ -49,17 +49,19 @@ const dbUserHelp = {
 
 					}
 
-					res.cookie('userInfo', JSON.stringify(userInfo), {
-						//最大失效时间
-						maxAge: 1000 * 60 * 60 * 24 * 1,
-						httpOnly: true, //默认 false 不允许 客户端脚本访问 
-						// signed: true //加密属性
-					});
+					// res.cookie('userinfo', JSON.stringify(userinfo), {
+					// 	//最大失效时间
+					// 	maxAge: 1000 * 60 * 60 * 24 * 1,
+
+					// 	// maxAge: 1000 * 10,
+					// 	httpOnly: true, //默认 false 不允许 客户端脚本访问 
+					// 	// signed: true //加密属性
+					// });
 					//token返回在header
 					// console.log("token返回", token)
 					// res.setHeader("Access-Control-Expose-Headers", "token");
 					// res.header("token", token)
-					res.send(resultInfo(true, "用户密码匹配", "success"))
+					res.send(resultInfo(true, userinfo, "success"))
 				} else {
 					// console.log('ERROR:', error); // print the error;
 					res.send(resultInfo(false, "用户密码不匹配", "error"))

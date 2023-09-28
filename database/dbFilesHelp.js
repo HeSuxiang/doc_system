@@ -77,14 +77,14 @@ const dbFilesHelp = {
 
 		//pgadmin 语句
 		// 		SELECT * FROM(
-		// 			SELECT id, index, name, null as filename,permissions, haspermissions, null as upuser, null as uptime,null as size, null as path, null as mimetype, null as md5, 'dir' as type FROM public.directorys where parentindex = 1
+		// 			SELECT id, index, parentindex, name, null as filename,permissions, haspermissions, null as upuser, null as uptime,null as size, null as pathyear, null as mimetype, null as md5, 'dir' as type FROM public.directorys where parentindex = 1
 		//         union
-		//           SELECT id, dirindex as index, originalname as name, filename,null as permissions, null as haspermissions, upuser,uptime, size, path, mimetype, md5, 'file' as type  FROM public.files where dirindex = 1
+		//           SELECT id, dirindex as index, dirindex as parentindex ,originalname as name, filename,null as permissions, null as haspermissions, upuser,uptime, size, pathyear, mimetype, md5, 'file' as type  FROM public.files where dirindex = 1
 		// 		)
 		//         AS foo 
 		//         ORDER BY type, id
 
-		db.any('SELECT  * FROM ( SELECT id, index, name, null as filename, permissions,haspermissions,null as upuser, null as uptime,null as size, null as path,null as mimetype, null as md5, $1 as type FROM public.directorys where parentindex  =$3  union SELECT id, dirindex as index,  originalname as name,filename, null as permissions, null as haspermissions ,upuser,uptime, size, path, mimetype,md5, $2 as type  FROM public.files where dirindex  = $3) AS foo ORDER BY type , id', [typeDir, typefile, parentIndex])
+		db.any('SELECT  * FROM ( SELECT id, index,parentindex, name, null as filename, permissions,haspermissions,null as upuser, null as uptime,null as size, null as pathyear,null as mimetype, null as md5, $1 as type FROM public.directorys where parentindex  =$3  union SELECT id, dirindex as index, dirindex as parentindex, originalname as name,filename, null as permissions, null as haspermissions ,upuser,uptime, size, pathyear, mimetype,md5, $2 as type  FROM public.files where dirindex  = $3) AS foo ORDER BY type , id', [typeDir, typefile, parentIndex])
 
 			.then(data => {
 				// console.log('DATA:', data); // print data;
@@ -161,7 +161,17 @@ const dbFilesHelp = {
 				res.send(resultInfo(false, error, "未知错误"))
 			});
 
+	},
 
+
+	//批量删除文件
+	delFiles: (req, res) => {
+		console.log("delFiles req.body", req.body);
+	},
+
+	//批量删除文件夹
+	delDirs: (req, res) => {
+		console.log("delDirs req.body", req.body);
 	}
 
 }

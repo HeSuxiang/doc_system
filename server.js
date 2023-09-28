@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //CORS跨域配置和静态访问服务
 app.use(cors({
-  origin: '*'
+  origin: 'http://localhost:5173'
 }));
 
 // 托管静态资源
@@ -47,16 +47,17 @@ app.use("/static", express.static("static"))
 app.use((req, res, next) => {
   console.log("cookie校验 req.url ", req.url)
   res.header("Access-Control-Allow-Credentials", "true");
-  console.log("req.cookies.userinfo  ", req.cookies.userInfo)
+  console.log("req.cookies   ", req.cookies)
+  console.log("req.cookies.userinfo  ", req.cookies.userinfo)
 
 
 
   //检查cookie
-  if (req.cookies.userInfo) {
+  if (req.cookies.userinfo) {
     //有cookie
-    const userinfo = JSON.parse(req.cookies.userInfo)
+    const userinfo = JSON.parse(req.cookies.userinfo)
     console.log("has cookie username", userinfo.username);
-    console.log("no cookie req.url 访问通过", req.url);
+
     next()
   } else {
     //无cookie

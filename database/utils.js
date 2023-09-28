@@ -12,14 +12,14 @@ var resultInfo = function (code, data, msg) {
 	return obj;
 };
 
-var fileInfo = function (filename, originalname, dirindex, upuser, uptime, size, path, mimetype, md5) {
+var fileInfo = function (filename, originalname, dirindex, upuser, uptime, size, pathyear, mimetype, md5) {
 	filename = filename || "";
 	originalname = originalname || "";
 	dirindex = dirindex || "";
 	upuser = upuser || "";
 	uptime = uptime || 0;
 	size = size || 0;
-	path = path || "";
+	pathyear = pathyear || "";
 	mimetype = mimetype || "";
 	md5 = md5 || "";
 
@@ -30,7 +30,7 @@ var fileInfo = function (filename, originalname, dirindex, upuser, uptime, size,
 		upuser: upuser,
 		uptime: uptime,
 		size: size,
-		path: path,
+		pathyear: pathyear,
 		mimetype: mimetype,
 		md5: md5,
 	};

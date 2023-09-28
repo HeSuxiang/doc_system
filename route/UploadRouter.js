@@ -66,8 +66,11 @@ router.post('/file', upload.single('file'), function (req, res, next) {
 	const newfilepath = path.join(file.destination, newFileName);
 	fs.renameSync(filepath, newfilepath);
 
+	let date = new Date();
+	let pathyear = date.getFullYear();
+
 	//设置文件信息
-	var fileinfo = fileInfo(newFileName, file.originalname, parseInt(dirindex), upuser, getdate(), file.size, file.path, file.mimetype, md5)
+	var fileinfo = fileInfo(newFileName, file.originalname, parseInt(dirindex), upuser, getdate(), file.size, pathyear, file.mimetype, md5)
 	//插入信息到数据库
 	dbUploadHelp.AddFile(req, res, fileinfo);
 })

@@ -38,4 +38,20 @@ router.post("/adddir", (req, res) => {
 
 })
 
+//批量删除文件
+router.post("/delfiles", (req, res) => {
+	// console.log("add body", req.body)//必须配置中间件
+	// console.log(req)//必须配置中间件
+	dbFilesHelp.delFiles(req, res);
+
+})
+
+//批量删除文件夹
+router.post("/deldirs", (req, res) => {
+	// console.log("add body", req.body)//必须配置中间件
+	// console.log(req)//必须配置中间件
+	dbFilesHelp.delDirs(req, res);
+
+})
+
 module.exports = router

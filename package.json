@@ -65,6 +65,7 @@
     "is-promise": "^2.2.2",
     "jade": "^1.11.0",
     "jake": "^10.8.7",
+    "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "jstransformer": "^0.0.2",
     "jwa": "^1.4.1",
