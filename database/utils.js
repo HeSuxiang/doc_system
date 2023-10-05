@@ -45,6 +45,35 @@ function getdate() {
 	return y + "-" + (m < 10 ? "0" + m : m) + "-" + (d < 10 ? "0" + d : d) + " " + now.toTimeString().substr(0, 8);
 }
 
+function getTime() {
+	let myDate = new Date()
+	let year = myDate.getFullYear();   //获取系统的年；
+	let Month = myDate.getMonth() + 1;
+	let day = myDate.getDate(); // 获取系统日，
+	let hour = myDate.getHours(); //获取系统时，
+	let minute = myDate.getMinutes(); //分
+	let second = myDate.getSeconds(); //秒
+
+	if (Month < 10) {
+		Month = '0' + Month
+	}
+	if (day < 10) {
+		day = '0' + day
+	}
+
+	if (hour < 10) {
+		hour = '0' + hour
+	}
+	if (minute < 10) {
+		minute = '0' + minute
+	}
+	if (second < 10) {
+		second = '0' + second
+	}
+
+	return year + '' + Month + '' + day + '-' + hour + '' + minute + '' + second
+
+}
 //token 
 const jwt = require("jsonwebtoken")
 const secret = "doc-system"
@@ -63,4 +92,4 @@ const JWT = {
 }
 
 
-module.exports = { resultInfo, fileInfo, getdate }; 
+module.exports = { resultInfo, fileInfo, getdate, getTime }; 

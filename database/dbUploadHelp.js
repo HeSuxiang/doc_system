@@ -16,7 +16,7 @@ const dbUploadHelp = {
 		db.task(async t => {
 			// t.ctx = task config + state context;
 			//查询同MD5文件
-			fileinfo = await t.any('select id,filename,originalname,dirindex,upuser,uptime,size, pathyear,mimetype, md5 from files where md5 = $1 ORDER BY id ASC', [filemd5]);
+			fileinfo = await t.any('select id,filename,originalname,dirindex,upuser,uptime,size, pathyear,mimetype, md5 from files where md5 = $1   ORDER BY id ASC', [filemd5]);
 			// console.log("await fileinfo", fileinfo);
 			fileinfo = fileinfo.length > 0 ? fileinfo[0] : false
 			// console.log("  fileinfo.length > 0? fileinfo[0] : false", fileinfo);
@@ -29,7 +29,7 @@ const dbUploadHelp = {
 				var hasSomeNameFile;
 				fileinfo.originalname = originalname;
 				do {
-					hasSomeNameFile = await t.any('select id,originalname,dirindex from files where originalname = $1 and dirindex = $2 ORDER BY id ASC', [fileinfo.originalname, dirindex]);
+					hasSomeNameFile = await t.any('select id,originalname,dirindex from files where originalname = $1 and dirindex = $2  and isdel = false ORDER BY id ASC', [fileinfo.originalname, dirindex]);
 					//有同名文件
 					if (hasSomeNameFile && hasSomeNameFile.length > 0) {
 						//修改新文件名 加(1)
@@ -41,8 +41,8 @@ const dbUploadHelp = {
 				console.log("insert ", fileinfo.originalname);
 
 				//插入新文件名数据
-				newfileinfo = await t.oneOrNone('INSERT INTO files( filename, originalname, dirindex, upuser, uptime, size, pathyear, mimetype, md5)  VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING id',
-					[fileinfo.filename, fileinfo.originalname, dirindex, upuser, uptime, fileinfo.size, fileinfo.pathyear, fileinfo.mimetype, fileinfo.md5])
+				newfileinfo = await t.oneOrNone('INSERT INTO files( filename, originalname, dirindex, upuser, uptime, size, pathyear, mimetype, md5,isdel)  VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING id',
+					[fileinfo.filename, fileinfo.originalname, dirindex, upuser, uptime, fileinfo.size, fileinfo.pathyear, fileinfo.mimetype, fileinfo.md5, false])
 			}
 			console.log("fileinfo", fileinfo);
 			console.log("newfileinfo", newfileinfo);
@@ -95,8 +95,8 @@ const dbUploadHelp = {
 			} while (hasSomeNameFile.length > 0)
 
 			//插入数据
-			const info = await t.oneOrNone('INSERT INTO files( filename, originalname, dirindex, upuser, uptime, size, pathyear, mimetype, md5)  VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING id',
-				[fileinfo.filename, fileinfo.originalname, fileinfo.dirindex, fileinfo.upuser, fileinfo.uptime, fileinfo.size, fileinfo.pathyear, fileinfo.mimetype, fileinfo.md5])
+			const info = await t.oneOrNone('INSERT INTO files( filename, originalname, dirindex, upuser, uptime, size, pathyear, mimetype, md5,isdel)  VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING id',
+				[fileinfo.filename, fileinfo.originalname, fileinfo.dirindex, fileinfo.upuser, fileinfo.uptime, fileinfo.size, fileinfo.pathyear, fileinfo.mimetype, fileinfo.md5, false])
 			return info;
 		}).then(data => {
 			// console.log('DATA:', resultInfo(true, data, "success")); // print data;

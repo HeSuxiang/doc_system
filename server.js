@@ -26,12 +26,52 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 
+
 app.use(express.urlencoded({ extended: false }));
 
+
+
+// //设置跨域请求
+// app.all('*', function (req, res, next) {
+//   //设置请求头
+//   //允许所有来源访问
+//   res.header('Access-Control-Allow-Origin', '*')
+//   //用于判断request来自ajax还是传统请求
+//   res.header("Access-Control-Allow-Headers", " Origin, X-Requested-With, Content-Type, Accept");
+//   //允许访问的方式
+//   res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS')
+//   //修改程序信息与版本
+//   res.header('X-Powered-By', ' 3.2.1')
+//   //内容类型：如果是post请求必须指定这个属性
+//   res.header('Content-Type', 'application/json;charset=utf-8')
+//   next()
+// })
+
+// // Flag to indicate whether we are in a DEV environment:
+// const $DEV = process.env.NODE_ENV === 'development';
+// if ($DEV) {
+//   // If it is not a DEV environment:
+//   // CORS跨域配置和静态访问服务
+//   app.use(cors({
+//     origin: 'http://localhost:5173',
+//     credentials: true
+//   }));
+// } else {
+//   app.use(cors({
+//     origin: '*',
+//     credentials: true
+//   }));
+// }
+
+
+// If it is not a DEV environment:
 //CORS跨域配置和静态访问服务
 app.use(cors({
-  origin: 'http://localhost:5173'
+  origin: 'http://localhost:5173',
+  credentials: true
 }));
+
+
 
 // 托管静态资源
 app.use(express.static('./dist'))
@@ -45,10 +85,10 @@ app.use("/static", express.static("static"))
 
 // //设置中间件，cookie校验
 app.use((req, res, next) => {
-  console.log("cookie校验 req.url ", req.url)
+  // console.log("cookie校验 req.url ", req.url)
   res.header("Access-Control-Allow-Credentials", "true");
-  console.log("req.cookies   ", req.cookies)
-  console.log("req.cookies.userinfo  ", req.cookies.userinfo)
+  // console.log("req.cookies   ", req.cookies)
+  // console.log("req.cookies.userinfo  ", req.cookies.userinfo)
 
 
 
