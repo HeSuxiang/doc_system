@@ -377,6 +377,28 @@ const dbFilesHelp = {
         // return (resultInfo(false, error, "error"))
       });
   },
+
+  //更新文件夹权限
+  UpDateDirPermissions: (req, res) => {
+    // console.log("UpDateDirPermissions body", req.body);
+    const { index, permissions } = req.body;
+
+    db.any("UPDATE directorys SET permissions =  $1 WHERE index = $2", [
+      permissions,
+      index,
+    ])
+      .then((data) => {
+        // console.log('DATA:', resultInfo(true, data, "success")); // print data;
+
+        res.send(resultInfo(true, data, "success"));
+        // return (resultInfo(true, data, "success"))
+      })
+      .catch((error) => {
+        // console.log('ERROR:', error); // print the error;
+        res.send(resultInfo(false, error, "error"));
+        // return (resultInfo(false, error, "error"))
+      });
+  },
 };
 
 module.exports = dbFilesHelp;

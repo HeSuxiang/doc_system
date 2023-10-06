@@ -87,4 +87,10 @@ router.post("/renamedir", (req, res) => {
   dbFilesHelp.reNameDir(req, res);
 });
 
+//更新文件夹权限
+router.post("/updatedirpermissions", (req, res) => {
+  // console.log("add body", req.body)//必须配置中间件
+  // console.log(req)//必须配置中间件
+  dbFilesHelp.UpDateDirPermissions(req, res);
+});
 module.exports = router;

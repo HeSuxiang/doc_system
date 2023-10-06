@@ -4,12 +4,11 @@
  */
 const express = require("express");
 
+const router = express.Router();
 
-const router = express.Router()
-
-const db = require("../database/db")
-const dbUserHelp = require("../database/dbUserHelp")
-const dbGroupHelp = require("../database/dbGroupHelp")
+const db = require("../database/db");
+const dbUserHelp = require("../database/dbUserHelp");
+const dbGroupHelp = require("../database/dbGroupHelp");
 
 //resultInfo.js
 const { resultInfo } = require("../database/utils");
@@ -17,9 +16,8 @@ const { resultInfo } = require("../database/utils");
 //路由级别-响应前端的get请求
 //获取所有用户
 router.get("/user/all", (req, res) => {
-    dbUserHelp.getAllUser(req, res);
-
-})
+  dbUserHelp.getAllUser(req, res);
+});
 
 // router.get("/user/all", (req, res) => {
 //     // new URL
@@ -34,45 +32,39 @@ router.get("/user/all", (req, res) => {
 //             res.send(resultInfo(false, error, "error"))
 //         });
 
-
 // })
 
 ////路由级别-响应前端的post请求
 //验证用户名-密码
 router.post("/user/query", (req, res) => {
-
-    // console.log(req)//必须配置中间件
-    dbUserHelp.queryUser(req, res);
-
-
-})
-
+  // console.log(req)//必须配置中间件
+  dbUserHelp.queryUser(req, res);
+});
 
 ////路由级别-响应前端的post请求
 //增加用户
 router.post("/user/add", (req, res) => {
-    // console.log("add body", req.body)//必须配置中间件
-    // console.log(req)//必须配置中间件
-    dbUserHelp.addUser(req, res);
-
-})
-
-
+  // console.log("add body", req.body)//必须配置中间件
+  // console.log(req)//必须配置中间件
+  dbUserHelp.addUser(req, res);
+});
 
 //获取所有用户组
 router.get("/groups/all", (req, res) => {
-    dbGroupHelp.getAllGroup(req, res);
+  dbGroupHelp.getAllGroup(req, res);
+});
 
-})
+//获取所有用户组名字
+router.get("/groups/allgroupsname", (req, res) => {
+  dbGroupHelp.getAllGroupName(req, res);
+});
 
 //增加用户组
 router.post("/groups/add", async (req, res) => {
-    console.log("add body", req.body)//必须配置中间件
-    // console.log(req)//必须配置中间件
-    dbGroupHelp.addGroup(req, res);
-
-})
+  console.log("add body", req.body); //必须配置中间件
+  // console.log(req)//必须配置中间件
+  dbGroupHelp.addGroup(req, res);
+});
 ////路由级别-响应前端的put ,delete请求
 
-
-module.exports = router
+module.exports = router;
