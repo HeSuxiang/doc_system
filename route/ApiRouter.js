@@ -49,6 +49,39 @@ router.post("/user/add", (req, res) => {
   dbUserHelp.addUser(req, res);
 });
 
+//获取所有用户名字
+router.get("/user/allusersname", (req, res) => {
+  dbUserHelp.getAllUserName(req, res);
+});
+
+//设置用户为管理员
+router.post("/user/setadmin", (req, res) => {
+  // console.log("add body", req.body)//必须配置中间件
+  // console.log(req)//必须配置中间件
+  dbUserHelp.setAdmin(req, res);
+});
+
+////禁用用户
+router.post("/user/disableuser", (req, res) => {
+  // console.log("add body", req.body)//必须配置中间件
+  // console.log(req)//必须配置中间件
+  dbUserHelp.disableUser(req, res);
+});
+
+////重置密码000000
+router.post("/user/resetpasswd", (req, res) => {
+  // console.log("add body", req.body)//必须配置中间件
+  // console.log(req)//必须配置中间件
+  dbUserHelp.resetPasswd(req, res);
+});
+
+//删除用户
+router.post("/user/deleteuser", (req, res) => {
+  // console.log("add body", req.body)//必须配置中间件
+  // console.log(req)//必须配置中间件
+  dbUserHelp.deleteUser(req, res);
+});
+
 //获取所有用户组
 router.get("/groups/all", (req, res) => {
   dbGroupHelp.getAllGroup(req, res);
@@ -61,10 +94,24 @@ router.get("/groups/allgroupsname", (req, res) => {
 
 //增加用户组
 router.post("/groups/add", async (req, res) => {
-  console.log("add body", req.body); //必须配置中间件
+  // console.log("add body", req.body); //必须配置中间件
   // console.log(req)//必须配置中间件
   dbGroupHelp.addGroup(req, res);
 });
+
+//更新用户组
+router.post("/groups/update", async (req, res) => {
+  // console.log("update body", req.body); //必须配置中间件
+  // console.log(req)//必须配置中间件
+  dbGroupHelp.updateGroup(req, res);
+});
 ////路由级别-响应前端的put ,delete请求
+
+//删除用户组
+router.post("/groups/delete", async (req, res) => {
+  // console.log("update body", req.body); //必须配置中间件
+  // console.log(req)//必须配置中间件
+  dbGroupHelp.deleteGroup(req, res);
+});
 
 module.exports = router;

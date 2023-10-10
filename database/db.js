@@ -4,15 +4,15 @@
 // This is to show a complete test application;
 ///////////////////////////////////////////////
 
-const promise = require('bluebird'); // or any other Promise/A+ compatible library;
-const dbConfig = require('../db-config.json'); // db connection details
+const promise = require("bluebird"); // or any other Promise/A+ compatible library;
+const dbConfig = require("../db-config.json"); // db connection details
 
 const initOptions = {
-	promiseLib: promise // overriding the default (ES6 Promise);
+  promiseLib: promise, // overriding the default (ES6 Promise);
 };
 
 // const pgp = require('pg-promise');
-const pgp = require('pg-promise')(initOptions);
+const pgp = require("pg-promise")(initOptions);
 // See also: http://vitaly-t.github.io/pg-promise/module-pg-promise.html
 
 // Database connection details;
@@ -32,5 +32,4 @@ const pgp = require('pg-promise')(initOptions);
 
 const db = pgp(dbConfig); // database instance;
 
-module.exports = { pgp, db }
-
+module.exports = { pgp, db };

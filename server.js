@@ -63,7 +63,8 @@ app.use(express.urlencoded({ extended: false }));
 //CORS跨域配置和静态访问服务
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "*",
+    // origin: "http://localhost:5173",
     credentials: true,
   })
 );
@@ -106,46 +107,6 @@ app.use((req, res, next) => {
   }
 });
 
-// //设置中间件，token过期校验
-// app.use((req, res, next) => {
-//   //排除login相关的路由和接口
-//   console.log("token校验 req.url ", req.url)
-//   if (req.url.includes("/api/user/query") || req.url.includes("/down/")) {
-//     console.log("eq.url.includes(/api/user/query) ", req.url.includes("/api/user/query"))
-
-//     console.log("req.url.includes(/ down / )", req.url.includes("/down/"))
-//     next()
-//     return
-//   }
-
-//   const token = req.headers["token"]
-//   console.log("token校验", token)
-
-//   if (token) {
-//     const payload = JWT.verify(token)
-//     console.log("token校验 payload", payload)
-//     if (payload) {
-//       //重新计算token过期时间
-//       const newToken = JWT.generate({
-//         username: payload.username,
-//       }, "1d")
-//       res.setHeader("Access-Control-Expose-Headers", "token");
-//       res.header("token", newToken)
-//       next()
-//     } else {
-//       res.setHeader("Access-Control-Expose-Headers", "token");
-//       res.header("token", null)
-//       res.status(401).send({ code: 401, errInfo: "token无效" })
-//       // next() //调试暂时放行
-//     }
-//   } else {
-//     res.setHeader("Access-Control-Expose-Headers", "token");
-//     res.header("token", null)
-//     res.status(401).send({ code: 401, errInfo: "无token" })
-//     // next() //调试暂时放行
-//   }
-// })
-
 //应用级别
 app.use("/api", ApiRouter);
 app.use("/upload", UploadRouter);
@@ -164,5 +125,5 @@ app.use((req, res) => {
 // 调用 app.listen 方法，指定端口号并启动 web 服务器
 const port = 80;
 app.listen(port, function () {
-  console.log("Express server running at http://127.0.0.1:" + port);
+  console.log("Express server running at port " + port);
 });

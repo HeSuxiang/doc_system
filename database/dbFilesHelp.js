@@ -303,6 +303,39 @@ const dbFilesHelp = {
       });
   },
 
+  //获取指定用户删除的文件,文件夹
+  getAllDelFilesAndDirsByUser: (req, res) => {
+    const user = req.params.user;
+    console.log("getAllDelFilesAndDirsByUser query", req.query);
+    var typeDir = "dir";
+    var typefile = "file";
+
+    //pgadmin 语句
+    // 		SELECT * FROM(
+    // 			SELECT id, index, parentindex, name, null as filename,permissions, haspermissions, null as upuser, null as uptime,null as size, null as pathyear, null as mimetype, null as md5, delusername, deltime, 'dir' as type FROM directorys where     isdel = true
+    //         union
+    //           SELECT id, dirindex as index, dirindex as parentindex ,originalname as name, filename,null as permissions, null as haspermissions, upuser,uptime, size, pathyear, mimetype, md5, delusername, deltime, 'file' as type  FROM files where   isdel = true
+    // 		)
+    //         AS foo
+    //         ORDER BY deltime
+
+    db.any(
+      "SELECT  * FROM ( SELECT id, index,parentindex, name, null as filename, permissions,haspermissions,null as upuser, null as uptime,null as size, null as pathyear,null as mimetype, null as md5,  delusername, deltime, $1 as type FROM directorys where   isdel = true and delusername = $3 union SELECT id, dirindex as index, dirindex as parentindex, originalname as name,filename, null as permissions, null as haspermissions ,upuser,uptime, size, pathyear, mimetype,md5,  delusername, deltime,  $2 as type  FROM files where   isdel = true and delusername = $3 ) AS foo ORDER BY deltime",
+      [typeDir, typefile, user]
+    )
+
+      .then((data) => {
+        // console.log('DATA:', data); // print data;
+        res.send(resultInfo(true, data, "success"));
+        // return (resultInfo(true, data, "success"))
+      })
+      .catch((error) => {
+        // console.log('ERROR:', error); // print the error;
+        res.send(resultInfo(false, error, "error"));
+        // return (resultInfo(false, error, "error"))
+      });
+  },
+
   //恢复删除的文件
   restoreFiles: (req, res) => {
     const id = req.params.id;

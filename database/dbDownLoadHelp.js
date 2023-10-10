@@ -129,13 +129,13 @@ const dbDownLoadHelp = {
       "../uploads/" + year + "/" + filename
     );
 
-    console.log("previewFile filename", filename);
-    console.log("previewFile filePath", filePath);
+    // console.log("previewFile filename", filename);
+    // console.log("previewFile filePath", filePath);
 
     try {
       // console.log("downFile try exist");
       var exist = fs.existsSync(filePath);
-      console.log("downFile filePath exist", exist);
+      // console.log("downFile filePath exist", exist);
       if (exist) {
         // console.log("downFile filePath exist", exist);
         // res.download(filePath);

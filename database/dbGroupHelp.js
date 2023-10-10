@@ -96,7 +96,7 @@ const dbGroupHelp = {
   getAllGroupName: (req, res) => {
     // new URL
     console.log("getAllGroup query", req.query);
-    db.any("select   name  from groups where 1 = $1 ORDER BY id ASC", [1])
+    db.any("select  id, name  from groups where 1 = $1 ORDER BY id ASC", [1])
       .then((data) => {
         // console.log('DATA:', resultInfo(true, data, "success")); // print data;
         res.send(resultInfo(true, data, "success"));
@@ -109,8 +109,42 @@ const dbGroupHelp = {
       });
   },
 
-  //禁用用户组
-  disableUser: (req, res) => {},
+  //更新用户组
+  updateGroup: (req, res) => {
+    const { id, groupname, users } = req.body;
+    console.log("updateGroup id", id); //必须配置中间件
+
+    db.any("UPDATE groups SET users = $1:json WHERE id = $2", [users, id])
+      .then((data) => {
+        // console.log('DATA:', resultInfo(true, data, "success")); // print data;
+
+        res.send(resultInfo(true, data, "success"));
+        // return (resultInfo(true, data, "success"))
+      })
+      .catch((error) => {
+        // console.log('ERROR:', error); // print the error;
+        res.send(resultInfo(false, error, "error"));
+        // return (resultInfo(false, error, "error"))
+      });
+  },
+
+  //删除用户组
+  deleteGroup: (req, res) => {
+    const { id } = req.body;
+    console.log("deleteGroup id", id); //必须配置中间件
+    db.any("DELETE FROM groups  WHERE id = $1", [id])
+      .then((data) => {
+        // console.log('DATA:', resultInfo(true, data, "success")); // print data;
+
+        res.send(resultInfo(true, data, "success"));
+        // return (resultInfo(true, data, "success"))
+      })
+      .catch((error) => {
+        // console.log('ERROR:', error); // print the error;
+        res.send(resultInfo(false, error, "error"));
+        // return (resultInfo(false, error, "error"))
+      });
+  },
 };
 
 module.exports = dbGroupHelp;

@@ -63,6 +63,11 @@ router.get("/alldelfileanddirs", (req, res) => {
   dbFilesHelp.getAllDelFilesAndDirs(req, res);
 });
 
+//获取指定用户删除的文件,文件夹
+router.get("/alldelfileanddirsbyuser/:user", (req, res) => {
+  dbFilesHelp.getAllDelFilesAndDirsByUser(req, res);
+});
+
 //恢复删除的文件
 router.get("/restorefile/:id", (req, res) => {
   dbFilesHelp.restoreFiles(req, res);
