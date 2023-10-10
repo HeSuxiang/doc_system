@@ -63,8 +63,9 @@ app.use(express.urlencoded({ extended: false }));
 //CORS跨域配置和静态访问服务
 app.use(
   cors({
-    origin: "*",
-    // origin: "http://localhost:5173",
+    //正式打包时用  origin: "*",
+    // origin: "*",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );

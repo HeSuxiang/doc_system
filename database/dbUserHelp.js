@@ -32,11 +32,11 @@ const dbUserHelp = {
     const { username, password } = req.body;
     // console.log(" queryUser req.body", req.body)
     db.any(
-      "select id, name,showname, password ,isadmin, groups from users where name = $1 and isdisable = false",
+      "select id, name,showname, password ,isadmin, groups ,isdisable from users where name = $1  And  ( isdisable IS NULL OR isdisable = false )",
       [username]
     )
       .then((data) => {
-        // console.log(data)
+        console.log(data);
         if (data.length == 1 && data[0].password == password) {
           // console.log('DATA:', resultInfo(true, data, "success")); // print data;
 
